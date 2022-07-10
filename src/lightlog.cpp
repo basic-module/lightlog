@@ -23,4 +23,9 @@ void OpenAyncLog()
 {
 	Logger::Instance()->Start();
 }
+
+void CloseLog()
+{
+	Logger::Instance()->Stop();
+}
 }

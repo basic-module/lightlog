@@ -22,6 +22,15 @@ void Logger::Start()
 			);
 }
 
+void Logger::Stop()
+{
+	isExit = true;
+	cond.notify_all();
+	if (worker.joinable()) {
+		worker.join();
+	};
+}
+
 void Logger::DirectWriteLog(const vector<std::string> &vecLogs)
 {
 	std::lock_guard<std::mutex> guard(fileMutex);
@@ -50,6 +59,9 @@ std::vector<std::string> Logger::GetLogs()
 	std::vector<string> tmp;
 	std::unique_lock guard(logMutex);
 	while (logs.empty()) {
+		if (isExit) {
+			return {};
+		}
 		cond.wait(guard);
 	}
 	logs.swap(tmp);

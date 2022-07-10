@@ -16,4 +16,5 @@ TEST(lightlog, SyncLog)
 	}
 	time_t end = time(nullptr);
 	cout << " end "<< ctime(&end) << endl;;
+	CloseLog();
 }

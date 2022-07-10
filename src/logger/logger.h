@@ -16,13 +16,13 @@ public:
 	bool CheckLogFileSize();
 	void NewLogFile();
 	void Start();	
+	void Stop();
 
 private:
 	Logger() = default;
 	~Logger()
 	{
-		isExit = true;
-		worker.join();
+		Stop();
 	}
 	off_t fileSize {20 * 1024};
 	std::string fileName;
